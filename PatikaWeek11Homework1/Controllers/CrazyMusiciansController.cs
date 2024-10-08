@@ -49,6 +49,18 @@ namespace PatikaWeek11Homework1.Controllers
             return Ok(crazyMusician);
         }
 
+        [HttpGet("search")]
+        public IActionResult SearchCrazyMusician([FromQuery] string keyword)
+        {
+            var crazyMusicians = _crazyMusicians.Where(x => x.Name.Contains(keyword) || x.Job.Contains(keyword) || x.FunFact.Contains(keyword)).ToList();
+
+            if (crazyMusicians.Count == 0)
+                return NotFound();
+
+            return Ok(crazyMusicians);
+
+        }
+
         [HttpPost]
         public IActionResult CreateCrazyMusician([FromBody] Musician musician)
         {
